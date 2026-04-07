@@ -1,10 +1,10 @@
 {
-  "name": "machine-restore",
+  "name": "fresh-press",
   "version": "1.0.0",
-  "description": "TUI to setup a fresh macOS install",
+  "description": "A fresh brew for your fresh machine — TUI to terraform a macOS dev environment",
   "type": "module",
   "bin": {
-    "machine-restore": "./bin/restore.js"
+    "fresh-press": "./bin/restore.js"
   },
   "scripts": {
     "start": "tsx src/cli.tsx",
@@ -39,6 +39,7 @@
     "eslint": "^10.2.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
+    "jiti": "^2.6.1",
     "prettier": "^3.8.1",
     "typescript-eslint": "^8.58.0"
   }
