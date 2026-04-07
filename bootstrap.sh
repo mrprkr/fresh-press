@@ -24,11 +24,11 @@ warn() { echo -e "${YELLOW}  ⚠ $1${NC}"; }
 fail() { echo -e "${RED}  ✗ $1${NC}"; exit 1; }
 
 REPO_URL="${MACHINE_RESTORE_REPO:-}"
-RESTORE_DIR="$HOME/Developer/machine-restore"
+RESTORE_DIR="$HOME/Developer/fresh-press"
 
 echo ""
 echo -e "${CYAN}┌──────────────────────────────────────────┐${NC}"
-echo -e "${CYAN}│       Machine Restore — Bootstrap        │${NC}"
+echo -e "${CYAN}│        Fresh Press — Bootstrap            │${NC}"
 echo -e "${CYAN}│  Installs foundations, then launches TUI  │${NC}"
 echo -e "${CYAN}└──────────────────────────────────────────┘${NC}"
 echo ""

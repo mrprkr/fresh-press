@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # ============================================================================
-# Machine Restore Script
+# Fresh Press — Headless Restore Script
 # Terraforms a fresh macOS install with a configured dev environment
 # Last snapshot: 2026-04-07
 # ============================================================================

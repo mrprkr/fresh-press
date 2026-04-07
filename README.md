@@ -1,27 +1,26 @@
-# Machine Restore
+# Fresh Press
 
-Terraforms a fresh macOS install into a fully configured dev environment.
-Safe to host publicly — no secrets, credentials, or personal data.
+A fresh brew for your fresh machine. Terraforms a bare macOS install into a fully configured dev environment via an interactive TUI.
 
-## Fresh machine quickstart
+## Quickstart
 
 On a brand new Mac with nothing installed:
 
 ```bash
 # One-liner bootstrap (installs xcode tools, brew, nvm, node, pnpm, then launches TUI)
-MACHINE_RESTORE_REPO=https://github.com/mrprkr/machine-restore.git \
-  bash <(curl -fsSL https://raw.githubusercontent.com/mrprkr/machine-restore/main/bootstrap.sh)
+MACHINE_RESTORE_REPO=https://github.com/mrprkr/fresh-press.git \
+  bash <(curl -fsSL https://raw.githubusercontent.com/mrprkr/fresh-press/main/bootstrap.sh)
 
 # — or clone first, then bootstrap —
-git clone https://github.com/mrprkr/machine-restore.git ~/Developer/machine-restore
-cd ~/Developer/machine-restore
+git clone https://github.com/mrprkr/fresh-press.git ~/Developer/fresh-press
+cd ~/Developer/fresh-press
 ./bootstrap.sh
 ```
 
 ## If you already have Node.js
 
 ```bash
-cd ~/Developer/machine-restore
+cd ~/Developer/fresh-press
 pnpm install
 pnpm start
 ```
