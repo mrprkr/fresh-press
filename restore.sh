@@ -221,6 +221,7 @@ step "Configuring Node.js via nvm"
 
 export NVM_DIR="$HOME/.nvm"
 mkdir -p "$NVM_DIR"
+# shellcheck source=/dev/null
 [ -s "$(brew --prefix)/opt/nvm/nvm.sh" ] && . "$(brew --prefix)/opt/nvm/nvm.sh"
 
 nvm install 22
@@ -377,7 +378,7 @@ ok "macOS preferences applied"
 step "Creating directory structure"
 
 mkdir -p "$HOME/Developer"
-ok "~/Developer ready"
+ok "$HOME/Developer ready"
 
 # ============================================================================
 # fzf keybindings

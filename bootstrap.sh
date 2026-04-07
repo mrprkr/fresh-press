@@ -77,9 +77,11 @@ else
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   if [[ "$ARCH" == "arm64" ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
+    # shellcheck disable=SC2016
     echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> "$HOME/.zprofile"
   else
     eval "$(/usr/local/bin/brew shellenv)"
+    # shellcheck disable=SC2016
     echo 'eval "$(/usr/local/bin/brew shellenv)"' >> "$HOME/.zprofile"
   fi
   ok "Installed"
@@ -99,6 +101,7 @@ brew install nvm 2>/dev/null || true
 
 export NVM_DIR="$HOME/.nvm"
 mkdir -p "$NVM_DIR"
+# shellcheck source=/dev/null
 [ -s "$(brew --prefix)/opt/nvm/nvm.sh" ] && . "$(brew --prefix)/opt/nvm/nvm.sh"
 
 if ! command -v node &>/dev/null; then
