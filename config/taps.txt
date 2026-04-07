@@ -3,7 +3,5 @@ antoniorodr/memo
 arthur-ficial/tap
 homebrew/cask-fonts
 michidk/tools
-openhue/cli
-steipete/tap
 stripe/stripe-cli
 supabase/tap

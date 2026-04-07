@@ -270,41 +270,20 @@ export const steps: Step[] = [
   {
     id: "shell",
     phase: "environment",
-    label: "Shell Environment",
-    description: "Install Oh My Zsh, Zinit, Powerlevel10k, and plugins",
-    run: async () => {
-      const home = process.env.HOME!;
-      if (!shSafe(`test -d ${home}/.oh-my-zsh`)) {
-        await shAsync(
-          `sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended`,
-        );
-      }
-      const custom = process.env.ZSH_CUSTOM || `${home}/.oh-my-zsh/custom`;
-      if (!shSafe(`test -d ${custom}/plugins/zsh-autosuggestions`)) {
-        await shAsync(
-          `git clone https://github.com/zsh-users/zsh-autosuggestions ${custom}/plugins/zsh-autosuggestions`,
-        );
-      }
-      if (!shSafe(`test -d ${custom}/plugins/zsh-syntax-highlighting`)) {
-        await shAsync(
-          `git clone https://github.com/zsh-users/zsh-syntax-highlighting ${custom}/plugins/zsh-syntax-highlighting`,
-        );
-      }
-    },
-  },
-  {
-    id: "zshrc",
-    phase: "environment",
-    label: "Shell Config (.zshrc)",
-    description: "Install .zshrc with aliases, plugins, and nvm auto-switch",
+    label: "Shell Config",
+    description: "Install .zshrc, p10k config, and Zinit (plugins auto-install on first launch)",
     run: async () => {
       const home = process.env.HOME!;
       const root = resolveRoot();
+      // Backup existing zshrc
       if (shSafe(`test -f ${home}/.zshrc`)) {
         const ts = new Date().toISOString().replace(/[:.]/g, "-");
         await shAsync(`cp "${home}/.zshrc" "${home}/.zshrc.backup-${ts}"`);
       }
+      // Install .zshrc (Zinit self-installs on first source)
       await shAsync(`cp "${root}/zshrc" "${home}/.zshrc"`);
+      // Install p10k config
+      await shAsync(`cp "${root}/config/p10k.zsh" "${home}/.p10k.zsh"`);
     },
   },
   {
@@ -332,6 +311,33 @@ export const steps: Step[] = [
       for (const ext of exts) {
         await shAsyncSafe(`cursor --install-extension ${ext}`);
       }
+    },
+  },
+  {
+    id: "claude-code",
+    phase: "environment",
+    label: "Claude Code Config",
+    description: "Restore settings, plugins, and CLAUDE.md",
+    run: async () => {
+      const home = process.env.HOME!;
+      const root = resolveRoot();
+      const claudeDir = `${home}/.claude`;
+      await shAsync(`mkdir -p "${claudeDir}"`);
+      await shAsync(`cp "${root}/config/claude-code-settings.json" "${claudeDir}/settings.json"`);
+      await shAsync(`cp "${root}/config/claude-code-claude-md.md" "${claudeDir}/CLAUDE.md"`);
+    },
+  },
+  {
+    id: "iterm2-profile",
+    phase: "environment",
+    label: "iTerm2 Profile",
+    description: "Install iTerm2 color scheme, font, and terminal settings",
+    run: async () => {
+      const home = process.env.HOME!;
+      const root = resolveRoot();
+      const dynDir = `${home}/Library/Application Support/iTerm2/DynamicProfiles`;
+      await shAsync(`mkdir -p "${dynDir}"`);
+      await shAsync(`cp "${root}/config/iterm2-profile.json" "${dynDir}/machine-restore.json"`);
     },
   },
 

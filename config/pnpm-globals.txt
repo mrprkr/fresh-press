@@ -1,6 +1,2 @@
 # Global pnpm packages
-clawdhub
-clawhub
-mcporter
 node-gyp
-openclaw

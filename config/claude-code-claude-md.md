@@ -1,0 +1,4 @@
+- Use typescript for code
+- nx for workspace management
+- use pnpm for packages
+- never use --linked supabase

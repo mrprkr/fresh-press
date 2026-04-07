@@ -1,188 +1,90 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
+# Enable Powerlevel10k instant prompt (must stay at top)
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
-
-# Set name of the theme to load
-# Powerlevel10k is loaded via Zinit below, so we don't set it here
-ZSH_THEME=""
-
-# Oh My Zsh plugins
-plugins=(
-  git
-  node
-  npm
-  yarn
-  vscode
-  brew
-  macos
-  zsh-autosuggestions
-  zsh-syntax-highlighting
-  history-substring-search
-)
-
-source $ZSH/oh-my-zsh.sh
-
-# Zinit plugin manager
+# ── Zinit ─────────────────────────────────────────────────────────────────────
+# Single plugin manager — no oh-my-zsh overhead
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
-[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+[ ! -d "$ZINIT_HOME" ] && mkdir -p "$(dirname $ZINIT_HOME)"
+[ ! -d "$ZINIT_HOME/.git" ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 source "${ZINIT_HOME}/zinit.zsh"
 
-# Load a few important annexes, without Turbo
-zinit light-mode for \
-    zdharma-continuum/zinit-annex-as-monitor \
-    zdharma-continuum/zinit-annex-bin-gem-node \
-    zdharma-continuum/zinit-annex-patch-dl \
-    zdharma-continuum/zinit-annex-rust
+# ── Theme ─────────────────────────────────────────────────────────────────────
+zinit ice depth=1
+zinit light romkatv/powerlevel10k
 
-# Powerlevel10k theme
-zinit ice depth=1; zinit light romkatv/powerlevel10k
+# ── Plugins (turbo-loaded for fast startup) ───────────────────────────────────
+zinit wait lucid for \
+  atinit"zicompinit; zicdreplay" \
+    zdharma-continuum/fast-syntax-highlighting \
+  atload"_zsh_autosuggest_start" \
+    zsh-users/zsh-autosuggestions \
+  blockf atpull"zinit creinstall -q ." \
+    zsh-users/zsh-completions \
+    zsh-users/zsh-history-substring-search \
+    Aloxaf/fzf-tab \
+    wfxr/forgit
 
-# Essential plugins for TypeScript development
-zinit light zsh-users/zsh-autosuggestions
-zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-history-substring-search
+# ── Completions ───────────────────────────────────────────────────────────────
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color=always $realpath'
 
-# Additional useful plugins
-zinit light Aloxaf/fzf-tab
-zinit light wfxr/forgit
-
-# TypeScript/Node.js specific plugins
-zinit ice as"program" pick"bin/git-dsf"
-zinit light zdharma-continuum/zsh-diff-so-fancy
-
-# Load completions
-autoload -Uz compinit && compinit
-
-# Load z for directory jumping
-. /opt/homebrew/etc/profile.d/z.sh
-
-# History configuration
-HISTSIZE=10000
-SAVEHIST=10000
+# ── History ───────────────────────────────────────────────────────────────────
+HISTSIZE=50000
+SAVEHIST=50000
 HISTFILE=~/.zsh_history
-setopt HIST_VERIFY
-setopt SHARE_HISTORY
-setopt APPEND_HISTORY
-setopt INC_APPEND_HISTORY
-setopt HIST_IGNORE_DUPS
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_REDUCE_BLANKS
-setopt HIST_IGNORE_SPACE
+setopt HIST_VERIFY SHARE_HISTORY APPEND_HISTORY INC_APPEND_HISTORY
+setopt HIST_IGNORE_DUPS HIST_IGNORE_ALL_DUPS HIST_REDUCE_BLANKS HIST_IGNORE_SPACE
+setopt HIST_FIND_NO_DUPS HIST_SAVE_NO_DUPS
 
-# Key bindings for history substring search
+# ── Key bindings ──────────────────────────────────────────────────────────────
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
-bindkey '^P' history-substring-search-up
-bindkey '^N' history-substring-search-down
+bindkey '^P'   history-substring-search-up
+bindkey '^N'   history-substring-search-down
 
-# Environment variables
-export EDITOR='code'
-export VISUAL='code'
+# ── Directory jumping (z) ────────────────────────────────────────────────────
+[[ -f /opt/homebrew/etc/profile.d/z.sh ]] && . /opt/homebrew/etc/profile.d/z.sh
 
-# Node.js/npm configuration
+# ── Environment ───────────────────────────────────────────────────────────────
+export EDITOR='cursor'
+export VISUAL='cursor'
 export NODE_OPTIONS="--max-old-space-size=8192"
-
-# Aliases for TypeScript development
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-
-# Git aliases
-alias gs='git status'
-alias ga='git add'
-alias gc='git commit'
-alias gp='git push'
-alias gl='git pull'
-alias gd='git diff'
-alias gb='git branch'
-alias gco='git checkout'
-alias gcb='git checkout -b'
-
-# Node/npm aliases
-alias ni='npm install'
-alias nid='npm install --save-dev'
-alias nig='npm install -g'
-alias nr='npm run'
-alias ns='npm start'
-alias nt='npm test'
-alias nb='npm run build'
-alias nw='npm run watch'
-alias nlint='npm run lint'
-alias nfix='npm run lint:fix'
-
-# Yarn aliases
-alias yi='yarn install'
-alias ya='yarn add'
-alias yad='yarn add --dev'
-alias yr='yarn run'
-alias ys='yarn start'
-alias yt='yarn test'
-alias yb='yarn build'
-alias yw='yarn watch'
-
-# TypeScript aliases
-alias tsc='npx tsc'
-alias tsw='npx tsc --watch'
-alias tslint='npx tslint'
-alias prettier='npx prettier'
-
-# Docker aliases
-alias dc='docker-compose'
-alias dcu='docker-compose up'
-alias dcd='docker-compose down'
-alias dcb='docker-compose build'
-alias dcl='docker-compose logs'
-
-# VS Code aliases
-alias code.='code .'
-alias c='code'
-
-# Supabase aliases
-alias sb='supabase'
-alias sbr='supabase db reset'
-alias sbss='supabase stop && supabase start'
-
-# FZF configuration
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 
-# Load local configuration if it exists
-[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# ── PATH ──────────────────────────────────────────────────────────────────────
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="/opt/homebrew/opt/pcsc-lite/bin:$PATH"
 
 # pnpm
-export PNPM_HOME="/Users/$USER/Library/pnpm"
+export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 
-export PATH="$HOME/Library/Python/3.9/bin:$PATH"
-
-# nvm
+# ── nvm (lazy-loaded to avoid 200ms+ startup penalty) ────────────────────────
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+nvm() {
+  unset -f nvm node npm npx pnpm
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+  nvm "$@"
+}
+node()  { unset -f nvm node npm npx pnpm; [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"; node "$@"; }
+npm()   { unset -f nvm node npm npx pnpm; [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"; npm "$@"; }
+npx()   { unset -f nvm node npm npx pnpm; [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"; npx "$@"; }
 
-# Auto-switch node version when .nvmrc is present
+# Auto-switch node version on directory change
 autoload -U add-zsh-hook
 load-nvmrc() {
+  [ -s "$NVM_DIR/nvm.sh" ] || return
+  unset -f nvm node npm npx 2>/dev/null
+  . "$NVM_DIR/nvm.sh"
   local nvmrc_path="$(nvm_find_nvmrc)"
   if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+    local nvmrc_node_version=$(nvm version "$(cat "$nvmrc_path")")
     if [ "$nvmrc_node_version" = "N/A" ]; then
       nvm install > /dev/null 2>&1
     elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
@@ -193,9 +95,63 @@ load-nvmrc() {
   fi
 }
 add-zsh-hook chpwd load-nvmrc
-load-nvmrc
 
-# OpenClaw Completion
+# ── Aliases ───────────────────────────────────────────────────────────────────
+# Navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias ll='ls -alF'
+alias la='ls -A'
+
+# Git
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
+alias gp='git push'
+alias gl='git pull'
+alias gd='git diff'
+alias gb='git branch'
+alias gco='git checkout'
+alias gcb='git checkout -b'
+alias glog='git log --oneline --graph --decorate -20'
+
+# pnpm (primary package manager)
+alias pi='pnpm install'
+alias pa='pnpm add'
+alias pad='pnpm add -D'
+alias pr='pnpm run'
+alias pd='pnpm dev'
+alias pb='pnpm build'
+alias pt='pnpm test'
+alias px='pnpm dlx'
+
+# npm (fallback)
+alias ni='npm install'
+alias nr='npm run'
+alias nb='npm run build'
+alias nt='npm test'
+
+# Docker (via OrbStack)
+alias dc='docker compose'
+alias dcu='docker compose up'
+alias dcd='docker compose down'
+alias dcl='docker compose logs'
+
+# Supabase
+alias sb='supabase'
+alias sbr='supabase db reset'
+alias sbss='supabase stop && supabase start'
+
+# Editor
+alias c='cursor'
+alias c.='cursor .'
+
+# ── Local overrides ──────────────────────────────────────────────────────────
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
+# ── Powerlevel10k config ─────────────────────────────────────────────────────
+[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+
+# ── Tool completions (conditional) ───────────────────────────────────────────
 [[ -f "$HOME/.openclaw/completions/openclaw.zsh" ]] && source "$HOME/.openclaw/completions/openclaw.zsh"
-export PATH="/opt/homebrew/opt/pcsc-lite/bin:$PATH"
-export PATH="/opt/homebrew/opt/pcsc-lite/sbin:$PATH"

@@ -47,20 +47,10 @@ mlx
 
 # Custom tap formulae
 memo
-goplaces
-himalaya
-imessage-exporter
-imsg
 mcp-publisher
-openhue-cli
-peekaboo
-remindctl
 rmrfrs
 sag
-songsee
-summarize
 svg2png
 vscli
-wacli
 autocode
 gemini-cli

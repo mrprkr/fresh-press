@@ -362,26 +362,13 @@ fi
 step "Setting up shell environment"
 
 # Oh My Zsh
-if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-fi
-ok "Oh My Zsh installed"
-
-# Oh My Zsh plugins (not bundled by default)
-ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
-[[ -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]] || \
-  git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
-[[ -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]] || \
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
-ok "Zsh plugins cloned"
-
-# Zinit will self-install on first zshrc source — no manual step needed
-ok "Zinit + Powerlevel10k will bootstrap on first shell launch"
+# Zinit + all plugins self-install on first zshrc source — no manual step needed
+ok "Zinit will bootstrap on first shell launch"
 
 # ============================================================================
-# .zshrc
+# Shell config (.zshrc + p10k)
 # ============================================================================
-step "Installing .zshrc"
+step "Installing shell config"
 
 if [[ -f "$HOME/.zshrc" ]]; then
   cp "$HOME/.zshrc" "$HOME/.zshrc.backup-$(date +%Y%m%d-%H%M%S)"
@@ -389,7 +376,28 @@ if [[ -f "$HOME/.zshrc" ]]; then
 fi
 
 cp "$SCRIPT_DIR/zshrc" "$HOME/.zshrc"
-ok ".zshrc installed"
+cp "$SCRIPT_DIR/config/p10k.zsh" "$HOME/.p10k.zsh"
+ok ".zshrc + p10k config installed"
+
+# ============================================================================
+# iTerm2 profile
+# ============================================================================
+step "Installing iTerm2 profile"
+
+ITERM_DYN_DIR="$HOME/Library/Application Support/iTerm2/DynamicProfiles"
+mkdir -p "$ITERM_DYN_DIR"
+cp "$SCRIPT_DIR/config/iterm2-profile.json" "$ITERM_DYN_DIR/machine-restore.json"
+ok "iTerm2 profile installed"
+
+# ============================================================================
+# Claude Code config
+# ============================================================================
+step "Configuring Claude Code"
+
+mkdir -p "$HOME/.claude"
+cp "$SCRIPT_DIR/config/claude-code-settings.json" "$HOME/.claude/settings.json"
+cp "$SCRIPT_DIR/config/claude-code-claude-md.md" "$HOME/.claude/CLAUDE.md"
+ok "Claude Code settings + CLAUDE.md installed"
 
 # ============================================================================
 # macOS defaults
@@ -440,10 +448,9 @@ echo "  1. Sign into 1Password, Google, iCloud"
 echo "  2. Sign into Slack, Linear, Figma"
 echo "  3. Configure Tailscale: tailscale up"
 echo "  4. Import GPG keys from backup"
-echo "  5. Run 'p10k configure' to set up Powerlevel10k prompt"
-echo "  6. Install apps not in Homebrew: Stunt Double,"
+echo "  5. Install apps not in Homebrew: Stunt Double,"
 echo "     Ableton Live 12 Suite, Adobe Lightroom"
-echo "  7. Restore Dock layout (see dock-apps.txt)"
-echo "  8. Open a new terminal to load the shell config"
+echo "  6. Arrange Dock layout (see dock-apps.txt)"
+echo "  7. Open a new terminal to load shell config"
 echo ""
 echo "Log saved to: $LOG_FILE"

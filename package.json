@@ -1,7 +1,7 @@
 {
   "name": "machine-restore",
   "version": "1.0.0",
-  "description": "TUI to terraform a fresh macOS install with your dev environment",
+  "description": "TUI to setup a fresh macOS install",
   "type": "module",
   "bin": {
     "machine-restore": "./bin/restore.js"
