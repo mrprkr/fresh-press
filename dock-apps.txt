@@ -1,0 +1,23 @@
+# Dock layout (left to right) — restore manually via drag-and-drop
+# Apps not installable via brew are marked [manual]
+
+Mail                          # System app
+Arc                           # brew: arc
+Maps                          # System app
+BusyCal                       # brew: busycal
+Slack                         # brew: slack
+Music                         # System app
+Figma                         # brew: figma
+Linear                        # brew: linear-linear
+Cursor                        # installed via cursor-cli cask
+iTerm                         # brew: iterm2
+Stunt Double                  # [manual]
+Claude                        # brew: claude
+1Password                     # brew: 1password
+System Settings               # System app
+iPhone Mirroring              # System app
+WhatsApp                      # brew: whatsapp
+Messages                      # System app
+Ableton Live 12 Suite         # [manual] — ableton.com
+Audio MIDI Setup              # System utility
+Adobe Lightroom               # [manual] — adobe.com

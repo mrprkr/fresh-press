@@ -1,0 +1,29 @@
+{
+  "name": "machine-restore",
+  "version": "1.0.0",
+  "description": "TUI to terraform a fresh macOS install with your dev environment",
+  "type": "module",
+  "bin": {
+    "machine-restore": "./bin/restore.js"
+  },
+  "scripts": {
+    "start": "tsx src/cli.tsx",
+    "build": "tsc",
+    "restore": "tsx src/cli.tsx"
+  },
+  "keywords": ["macos", "restore", "setup", "tui"],
+  "author": "mrprkr",
+  "license": "ISC",
+  "packageManager": "pnpm@10.33.0",
+  "dependencies": {
+    "@types/node": "^25.5.2",
+    "@types/react": "^19.2.14",
+    "ink": "^6.8.0",
+    "ink-select-input": "^6.2.0",
+    "ink-spinner": "^5.0.0",
+    "ink-text-input": "^6.0.0",
+    "react": "^19.2.4",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
+  }
+}
