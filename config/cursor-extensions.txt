@@ -1,22 +1,17 @@
 # Cursor / VS Code extensions
 1password.op-vscode
 aaron-bond.better-comments
-alefragnani.bookmarks
 anthropic.claude-code
 anysphere.remote-containers
 anysphere.remote-ssh
-arcanis.vscode-zipfs
 bradlc.vscode-tailwindcss
 bungcip.better-toml
 christian-kohler.npm-intellisense
 christian-kohler.path-intellisense
 davidanson.vscode-markdownlint
-davidgomes.platformio-ide-cursor
-dbaeumer.vscode-eslint
 docker.docker
 donjayamanne.githistory
 editorconfig.editorconfig
-emmanuelbeziat.vscode-great-icons
 esbenp.prettier-vscode
 formulahendry.auto-close-tag
 formulahendry.auto-rename-tag
@@ -29,7 +24,6 @@ gydunhn.vsc-essentials-core
 hamza-aziane.obsidian-dark
 ibm.output-colorizer
 ionutvmi.path-autocomplete
-knisterpeter.vscode-github
 llvm-vs-code-extensions.vscode-clangd
 manuth.eslint-language-service
 mattpocock.ts-error-translator
@@ -38,7 +32,6 @@ mhutchie.git-graph
 mikestead.dotenv
 ms-azuretools.vscode-containers
 ms-azuretools.vscode-docker
-ms-playwright.playwright
 ms-vscode.hexeditor
 ms-vscode.vscode-typescript-next
 mtxr.sqltools
@@ -53,7 +46,6 @@ tamasfe.even-better-toml
 typescriptteam.native-preview
 usernamehw.errorlens
 vincaslt.highlight-matching-tag
-xabikos.javascriptsnippets
 yoavbls.pretty-ts-errors
 yzhang.markdown-all-in-one
 zardoy.ts-essential-plugins

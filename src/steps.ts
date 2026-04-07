@@ -244,18 +244,6 @@ export const steps: Step[] = [
     },
   },
   {
-    id: "npm-globals",
-    phase: "environment",
-    label: "Global npm Packages",
-    description: "Install global npm packages",
-    run: async () => {
-      const pkgs = loadList("npm-globals.txt");
-      for (const pkg of pkgs) {
-        await shAsyncSafe(`npm install -g ${pkg}`);
-      }
-    },
-  },
-  {
     id: "uv-tools",
     phase: "environment",
     label: "Python Tools (uv)",

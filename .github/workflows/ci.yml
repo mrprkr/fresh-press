@@ -1,0 +1,95 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  typecheck:
+    name: Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec tsc --noEmit
+
+  lint:
+    name: Lint & Format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run format:check
+      - run: pnpm run lint
+
+  validate-configs:
+    name: Validate Config Files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check config files are non-empty and well-formed
+        run: |
+          echo "Checking config files..."
+          for f in config/*.txt; do
+            if [ ! -s "$f" ]; then
+              echo "ERROR: $f is empty"
+              exit 1
+            fi
+            # Strip comments and blank lines, ensure at least one entry
+            entries=$(grep -v '^#' "$f" | grep -v '^$' | wc -l)
+            echo "  $f: $entries entries"
+            if [ "$entries" -eq 0 ]; then
+              echo "ERROR: $f has no entries after stripping comments"
+              exit 1
+            fi
+          done
+
+      - name: Check JSON configs are valid
+        run: |
+          for f in config/*.json; do
+            echo "Validating $f..."
+            python3 -m json.tool "$f" > /dev/null || exit 1
+          done
+
+      - name: Check no secrets or personal paths
+        run: |
+          if grep -r '/Users/' config/ zshrc bootstrap.sh 2>/dev/null | grep -v '$USER' | grep -v '$HOME' | grep -v 'node_modules'; then
+            echo "ERROR: Hardcoded personal paths found"
+            exit 1
+          fi
+
+      - name: Verify Brewfile matches config
+        run: |
+          # Check that every tap in config/taps.txt is in Brewfile
+          while IFS= read -r line; do
+            tap=$(echo "$line" | sed 's/#.*//' | xargs)
+            [ -z "$tap" ] && continue
+            if ! grep -q "tap \"$tap\"" Brewfile; then
+              echo "ERROR: tap '$tap' in config/taps.txt but missing from Brewfile"
+              exit 1
+            fi
+          done < config/taps.txt
+          echo "Brewfile taps in sync"
+
+  shellcheck:
+    name: ShellCheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@2.0.0
+        with:
+          scandir: .
+          additional_files: bootstrap.sh restore.sh

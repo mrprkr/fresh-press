@@ -73,8 +73,6 @@ TAPS=(
   arthur-ficial/tap
   homebrew/cask-fonts
   michidk/tools
-  openhue/cli
-  steipete/tap
   stripe/stripe-cli
   supabase/tap
 )
@@ -137,21 +135,11 @@ FORMULAE=(
 
   # Custom tap formulae
   memo
-  goplaces
-  himalaya
-  imessage-exporter
-  imsg
   mcp-publisher
-  openhue-cli
-  peekaboo
-  remindctl
   rmrfrs
   sag
-  songsee
-  summarize
   svg2png
   vscli
-  wacli
   autocode
   gemini-cli
 )
@@ -245,33 +233,13 @@ ok "Node.js v22 set as default"
 step "Installing global pnpm packages"
 
 PNPM_GLOBALS=(
-  clawdhub
-  clawhub
-  mcporter
   node-gyp
-  openclaw
 )
 
 for pkg in "${PNPM_GLOBALS[@]}"; do
   pnpm add -g "$pkg" 2>/dev/null || warn "Failed to install pnpm global: $pkg"
 done
 ok "pnpm globals installed"
-
-# ============================================================================
-# Global npm packages
-# ============================================================================
-step "Installing global npm packages"
-
-NPM_GLOBALS=(
-  @figma/code-connect
-  agent-browser
-  clawdbot
-)
-
-for pkg in "${NPM_GLOBALS[@]}"; do
-  npm install -g "$pkg" 2>/dev/null || warn "Failed to install npm global: $pkg"
-done
-ok "npm globals installed"
 
 # ============================================================================
 # Python tools (via uv)
@@ -289,22 +257,17 @@ step "Installing Cursor extensions"
 EXTENSIONS=(
   1password.op-vscode
   aaron-bond.better-comments
-  alefragnani.bookmarks
   anthropic.claude-code
   anysphere.remote-containers
   anysphere.remote-ssh
-  arcanis.vscode-zipfs
   bradlc.vscode-tailwindcss
   bungcip.better-toml
   christian-kohler.npm-intellisense
   christian-kohler.path-intellisense
   davidanson.vscode-markdownlint
-  davidgomes.platformio-ide-cursor
-  dbaeumer.vscode-eslint
   docker.docker
   donjayamanne.githistory
   editorconfig.editorconfig
-  emmanuelbeziat.vscode-great-icons
   esbenp.prettier-vscode
   formulahendry.auto-close-tag
   formulahendry.auto-rename-tag
@@ -317,7 +280,6 @@ EXTENSIONS=(
   hamza-aziane.obsidian-dark
   ibm.output-colorizer
   ionutvmi.path-autocomplete
-  knisterpeter.vscode-github
   llvm-vs-code-extensions.vscode-clangd
   manuth.eslint-language-service
   mattpocock.ts-error-translator
@@ -326,7 +288,6 @@ EXTENSIONS=(
   mikestead.dotenv
   ms-azuretools.vscode-containers
   ms-azuretools.vscode-docker
-  ms-playwright.playwright
   ms-vscode.hexeditor
   ms-vscode.vscode-typescript-next
   mtxr.sqltools
@@ -341,7 +302,6 @@ EXTENSIONS=(
   typescriptteam.native-preview
   usernamehw.errorlens
   vincaslt.highlight-matching-tag
-  xabikos.javascriptsnippets
   yoavbls.pretty-ts-errors
   yzhang.markdown-all-in-one
   zardoy.ts-essential-plugins
@@ -357,16 +317,7 @@ else
 fi
 
 # ============================================================================
-# Oh My Zsh + Zinit + Powerlevel10k
-# ============================================================================
-step "Setting up shell environment"
-
-# Oh My Zsh
-# Zinit + all plugins self-install on first zshrc source — no manual step needed
-ok "Zinit will bootstrap on first shell launch"
-
-# ============================================================================
-# Shell config (.zshrc + p10k)
+# Shell (Zinit + Powerlevel10k)
 # ============================================================================
 step "Installing shell config"
 
@@ -450,7 +401,7 @@ echo "  3. Configure Tailscale: tailscale up"
 echo "  4. Import GPG keys from backup"
 echo "  5. Install apps not in Homebrew: Stunt Double,"
 echo "     Ableton Live 12 Suite, Adobe Lightroom"
-echo "  6. Arrange Dock layout (see dock-apps.txt)"
+echo "  6. Arrange Dock layout"
 echo "  7. Open a new terminal to load shell config"
 echo ""
 echo "Log saved to: $LOG_FILE"
