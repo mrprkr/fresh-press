@@ -289,7 +289,10 @@ export const steps: Step[] = [
     description: 'Install editor extensions',
     run: async () => {
       if (!shSafe('command -v cursor')) {
-        throw new Error('Cursor CLI not found — install Cursor first, then re-run this step')
+        await shAsyncSafe('brew install --cask cursor')
+      }
+      if (!shSafe('command -v cursor')) {
+        throw new Error('Cursor CLI not found — brew cask install failed')
       }
       const exts = loadList('cursor-extensions.txt')
       for (const ext of exts) {
