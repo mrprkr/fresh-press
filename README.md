@@ -1,68 +1,77 @@
 # Machine Restore
 
-Terraforms a fresh macOS install to match my dev environment.
+Terraforms a fresh macOS install into a fully configured dev environment.
+Safe to host publicly — no secrets, credentials, or personal data.
 
-## Quick start
+## Fresh machine quickstart
+
+On a brand new Mac with nothing installed:
 
 ```bash
-# Clone this repo
+# One-liner bootstrap (installs xcode tools, brew, node, pnpm, then launches TUI)
+curl -fsSL https://raw.githubusercontent.com/<user>/<repo>/main/bootstrap.sh | bash
+
+# — or clone first, then bootstrap —
 git clone <repo-url> ~/Developer/machine-restore
 cd ~/Developer/machine-restore
+./bootstrap.sh
+```
 
-# Option A: Interactive TUI (recommended)
+## If you already have Node.js
+
+```bash
+cd ~/Developer/machine-restore
 pnpm install
 pnpm start
-
-# Option B: Headless shell script
-chmod +x restore.sh
-./restore.sh
-
-# Option C: Just Homebrew packages (declarative)
-brew bundle --file=Brewfile
 ```
+
+## Restore phases
+
+The TUI runs steps in dependency order across 5 phases:
+
+| # | Phase | What it does |
+|---|-------|-------------|
+| 1 | **Foundation** | Rosetta 2, Homebrew taps, ~/Developer directory |
+| 2 | **Accounts & Auth** | 1Password + CLI, git identity, GitHub CLI auth |
+| 3 | **Dev Environment** | Formulae, nvm/Node.js, global packages, shell, editor extensions |
+| 4 | **Applications** | GUI apps via casks, Docker/OrbStack |
+| 5 | **Preferences** | Dock, Finder, dark mode, keyboard, trackpad |
 
 ## What's included
 
-| Category | Method |
-|----------|--------|
-| Homebrew taps, formulae, casks | `Brewfile` + TUI/`restore.sh` |
-| Shell config (oh-my-zsh, zinit, p10k, aliases) | `zshrc` |
-| Node.js via nvm | TUI/`restore.sh` |
-| Global pnpm/npm packages | TUI/`restore.sh` |
-| Python tools via uv | TUI/`restore.sh` |
-| Cursor extensions | TUI/`restore.sh` |
-| macOS preferences (dock, dark mode, finder) | TUI/`restore.sh` |
-| Dock app layout reference | `dock-apps.txt` |
+| Source | Contents |
+|--------|----------|
+| `config/taps.txt` | 7 Homebrew taps |
+| `config/formulae.txt` | ~70 CLI tools and libraries |
+| `config/casks.txt` | ~35 GUI applications |
+| `config/pnpm-globals.txt` | Global pnpm packages |
+| `config/npm-globals.txt` | Global npm packages |
+| `config/uv-tools.txt` | Python CLI tools |
+| `config/cursor-extensions.txt` | ~55 Cursor/VS Code extensions |
+| `zshrc` | Oh My Zsh + Zinit + Powerlevel10k + aliases |
+| `Brewfile` | Declarative `brew bundle` alternative |
+| `dock-apps.txt` | Dock layout reference |
 
-## TUI
+## Customizing
 
-The interactive TUI (`pnpm start`) lets you:
-- Select/deselect individual restore steps
-- Toggle all steps at once
-- See real-time progress with spinners
-- Review failures and manual steps at the end
+Edit the `config/*.txt` files to add or remove packages. Each file is a simple
+newline-separated list with `#` comments. The TUI reads them at runtime.
 
-Built with [Ink](https://github.com/vadimdemedes/ink) (React for CLI).
+## Updating your snapshot
+
+```bash
+brew list --formula > config/formulae.txt
+brew list --cask > config/casks.txt
+brew tap > config/taps.txt
+cursor --list-extensions | sort -u > config/cursor-extensions.txt
+```
+
+Then review and re-add comments/grouping as needed.
 
 ## Manual steps after restore
 
-1. Sign into 1Password, Google, iCloud
-2. Sign into Slack, Linear, Figma
-3. `tailscale up`
-4. Import GPG keys
-5. `p10k configure`
-6. Install non-brew apps: Stunt Double, Ableton Live 12 Suite, Adobe Lightroom
-7. Restore Dock layout from `dock-apps.txt`
-
-## Updating
-
-Re-snapshot your current machine:
-
-```bash
-brew list --formula > formulae.txt
-brew list --cask > casks.txt
-brew tap > taps.txt
-cursor --list-extensions > extensions.txt
-```
-
-Then update `Brewfile`, `src/steps.ts`, and `zshrc` accordingly.
+1. Install non-brew apps: Stunt Double, Ableton Live 12 Suite, Adobe Lightroom
+2. `tailscale up`
+3. Import GPG keys from backup
+4. `p10k configure`
+5. Arrange Dock (see `dock-apps.txt`)

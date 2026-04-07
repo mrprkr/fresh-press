@@ -1,0 +1,75 @@
+# Homebrew formulae — CLI tools and libraries
+# Core tools
+git
+gh
+curl
+wget
+ripgrep
+fzf
+z
+autojump
+
+# Languages & runtimes (node managed via nvm in bootstrap)
+nvm
+go
+python@3.13
+python@3.14
+uv
+
+# JS/TS ecosystem
+pnpm
+nx
+typescript
+typescript-language-server
+swc
+
+# Cloud & infra
+cloudflare-wrangler
+supabase
+stripe
+vercel-cli
+tailscale
+caddy
+gnupg
+
+# Container & dev tools
+act
+devcontainer
+docker-completion
+dockerfile-language-server
+vscode-langservers-extracted
+yamllint
+platformio
+
+# Media & image processing
+ffmpeg
+imagemagick
+sox
+whisper-cpp
+openai-whisper
+
+# ML
+mlx
+pytorch
+numpy
+
+# Custom tap formulae
+memo
+gogcli
+goplaces
+himalaya
+imessage-exporter
+imsg
+mcp-publisher
+openhue-cli
+peekaboo
+remindctl
+rmrfrs
+sag
+songsee
+summarize
+svg2png
+vscli
+wacli
+autocode
+gemini-cli

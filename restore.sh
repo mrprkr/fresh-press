@@ -3,7 +3,7 @@ set -euo pipefail
 
 # ============================================================================
 # Machine Restore Script
-# Terraforms a fresh macOS install to match mrprkr's dev environment
+# Terraforms a fresh macOS install with a configured dev environment
 # Last snapshot: 2026-04-07
 # ============================================================================
 

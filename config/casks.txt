@@ -1,0 +1,53 @@
+# Homebrew casks — GUI applications
+# 1password is installed separately in the accounts phase
+
+# Browsers
+arc
+google-chrome
+
+# Productivity
+busycal
+slack
+whatsapp
+google-drive
+raycast
+bartender
+betterdisplay
+the-unarchiver
+
+# Dev tools
+claude
+claude-code
+codex
+cursor-cli
+figma
+linear-linear
+orbstack
+postico
+iterm2
+
+# Cloud
+cloudflare-warp
+gcloud-cli
+tailscale-app
+
+# Hardware & AV
+elgato-control-center
+elgato-stream-deck
+presonus-universal-control
+qmk-toolbox
+
+# Remote
+realvnc-connect
+screens-connect
+windows-app
+
+# Media
+vlc
+sonos
+rotato
+
+# Other
+arduino-ide@nightly
+conductor
+container

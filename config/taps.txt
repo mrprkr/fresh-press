@@ -1,0 +1,8 @@
+# Homebrew taps — third-party repositories
+antoniorodr/memo
+arthur-ficial/tap
+michidk/tools
+openhue/cli
+steipete/tap
+stripe/stripe-cli
+supabase/tap

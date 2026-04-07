@@ -1,0 +1,4 @@
+# Global npm packages
+@figma/code-connect
+agent-browser
+clawdbot

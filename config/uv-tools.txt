@@ -1,0 +1,2 @@
+# Python tools installed via uv
+nano-pdf

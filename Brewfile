@@ -20,8 +20,7 @@ brew "fzf"
 brew "z"
 brew "autojump"
 
-# Languages & runtimes
-brew "node"
+# Languages & runtimes (node managed via nvm)
 brew "nvm"
 brew "go"
 brew "python@3.13"
