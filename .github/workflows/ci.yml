@@ -93,3 +93,5 @@ jobs:
         with:
           scandir: .
           additional_files: bootstrap.sh restore.sh
+          ignore_paths: config
+          ignore_names: zshrc
