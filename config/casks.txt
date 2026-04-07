@@ -37,17 +37,9 @@ elgato-stream-deck
 presonus-universal-control
 qmk-toolbox
 
-# Remote
-realvnc-connect
-screens-connect
-windows-app
-
 # Media
 vlc
-sonos
 rotato
 
-# Other
-arduino-ide@nightly
-conductor
-container
+# Fonts (Powerlevel10k)
+font-meslo-lg-nerd-font

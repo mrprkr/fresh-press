@@ -71,6 +71,7 @@ step "Adding Homebrew taps"
 TAPS=(
   antoniorodr/memo
   arthur-ficial/tap
+  homebrew/cask-fonts
   michidk/tools
   openhue/cli
   steipete/tap
@@ -97,14 +98,10 @@ FORMULAE=(
   ripgrep
   fzf
   z
-  autojump
 
-  # Languages & runtimes
-  node
+  # Languages & runtimes (node managed via nvm)
   nvm
-  go
   python@3.13
-  python@3.14
   uv
 
   # JS/TS ecosystem
@@ -120,14 +117,12 @@ FORMULAE=(
   stripe
   vercel-cli
   tailscale
-  caddy
   gnupg
 
   # Container & dev tools
   act
   devcontainer
   docker-completion
-  dockerfile-language-server
   vscode-langservers-extracted
   yamllint
   platformio
@@ -135,18 +130,13 @@ FORMULAE=(
   # Media & image processing
   ffmpeg
   imagemagick
-  sox
   whisper-cpp
-  openai-whisper
 
   # ML
   mlx
-  pytorch
-  numpy
 
   # Custom tap formulae
   memo
-  gogcli
   goplaces
   himalaya
   imessage-exporter
@@ -163,8 +153,6 @@ FORMULAE=(
   vscli
   wacli
   autocode
-
-  # Misc
   gemini-cli
 )
 
@@ -219,20 +207,12 @@ CASKS=(
   gcloud-cli
   tailscale-app
 
-  # Remote
-  realvnc-connect
-  screens-connect
-  windows-app
-
   # Media
   vlc
-  sonos
   rotato
 
-  # Other
-  arduino-ide@nightly
-  conductor
-  container
+  # Fonts
+  font-meslo-lg-nerd-font
 )
 
 for cask in "${CASKS[@]}"; do
@@ -244,7 +224,7 @@ ok "Casks installed"
 # Homebrew services
 # ============================================================================
 step "Registering Homebrew services (not starting)"
-ok "Services available: caddy, tailscale, unbound (start manually as needed)"
+ok "Services available: tailscale (start manually as needed)"
 
 # ============================================================================
 # Node.js via nvm

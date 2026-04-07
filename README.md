@@ -1,7 +1,6 @@
 # Machine Restore
 
 Terraforms a fresh macOS install into a fully configured dev environment.
-Safe to host publicly — no secrets, credentials, or personal data.
 
 ## Fresh machine quickstart
 
@@ -23,7 +22,7 @@ cd ~/Developer/machine-restore
 cd ~/Developer/machine-restore
 pnpm install
 pnpm start
-```
+``
 
 ## Restore phases
 

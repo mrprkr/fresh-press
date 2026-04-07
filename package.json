@@ -9,9 +9,17 @@
   "scripts": {
     "start": "tsx src/cli.tsx",
     "build": "tsc",
-    "restore": "tsx src/cli.tsx"
+    "restore": "tsx src/cli.tsx",
+    "lint": "eslint src/",
+    "format": "prettier --write src/",
+    "format:check": "prettier --check src/"
   },
-  "keywords": ["macos", "restore", "setup", "tui"],
+  "keywords": [
+    "macos",
+    "restore",
+    "setup",
+    "tui"
+  ],
   "author": "mrprkr",
   "license": "ISC",
   "packageManager": "pnpm@10.33.0",
@@ -25,5 +33,13 @@
     "react": "^19.2.4",
     "tsx": "^4.21.0",
     "typescript": "^6.0.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.2.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "prettier": "^3.8.1",
+    "typescript-eslint": "^8.58.0"
   }
 }
